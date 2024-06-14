@@ -1,0 +1,10 @@
+
+
+project.version = '1.0'
+
+dependencies {
+    implementation "org.develnext.jphp:jphp-runtime:$rootProject.ext.jphpVersion"
+    implementation project(':jphp-gui-ext')
+
+    implementation group: 'org.controlsfx', name: 'controlsfx', version: '8.40.12'
+}

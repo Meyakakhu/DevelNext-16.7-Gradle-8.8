@@ -1,0 +1,13 @@
+
+project.version = '1.0'
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+sourceSets {
+    main.resources.srcDirs = ['src']
+}
+
+

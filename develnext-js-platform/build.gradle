@@ -1,0 +1,16 @@
+
+project.version = '1.0'
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+sourceSets {
+    main.resources.srcDirs = ['src']
+}
+
+
+dependencies {
+    implementation project(':develnext-bundles:dn-httpclient-bundle')
+}

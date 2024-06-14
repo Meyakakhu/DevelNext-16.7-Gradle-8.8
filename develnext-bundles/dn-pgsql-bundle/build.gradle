@@ -1,0 +1,15 @@
+
+project.version = ''
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+sourceSets {
+    main.resources.srcDirs = ['src']
+}
+
+dependencies {
+    implementation group: 'org.postgresql', name: 'postgresql', version: '9.4.1212.jre7'
+}

@@ -1,0 +1,17 @@
+project.version = ''
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+sourceSets {
+    main.resources.srcDirs = ['src']
+}
+
+dependencies {
+    implementation (project(':jphp-gui-jfoenix-ext')) {
+        exclude group: 'org.develnext', module: 'jphp-gui-ext'
+    }
+}
+

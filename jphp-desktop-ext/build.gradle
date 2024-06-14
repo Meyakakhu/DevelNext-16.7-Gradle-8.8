@@ -1,0 +1,5 @@
+
+dependencies {
+    implementation project(":jphp-gui-ext")
+    implementation "org.develnext.jphp:jphp-runtime:$rootProject.ext.jphpVersion"
+}

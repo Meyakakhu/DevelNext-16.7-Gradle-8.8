@@ -1,0 +1,16 @@
+project.version = ''
+
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+sourceSets {
+    main.resources.srcDirs = ['src']
+}
+
+dependencies {
+    implementation "org.develnext.jphp:jphp-jsoup-ext:$rootProject.ext.jphpVersion"
+}
+

@@ -1,0 +1,15 @@
+repositories {
+    mavenCentral()
+
+    maven {
+        url 'https://oss.sonatype.org/content/repositories/snapshots/'
+    }
+}
+
+project.version = '1.0'
+
+dependencies {
+    implementation "org.develnext.jphp:jphp-runtime:$rootProject.ext.jphpVersion"
+    implementation project(':jphp-gui-ext')
+    implementation project(':develnext-designer')
+}

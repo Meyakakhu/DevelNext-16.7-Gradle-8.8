@@ -1,0 +1,51 @@
+
+include 'develnext-designer';
+
+include 'jphp-gui-ext',
+        'jphp-gui-controlfx-ext',
+        'jphp-gui-jfoenix-ext',
+        'jphp-desktop-ext',
+        'jphp-desktop-hotkey-ext',
+        'jphp-app-framework',
+        'jphp-game-ext',
+        'jphp-systemtray-ext',
+        'jphp-parser',
+        'develnext';
+
+include 'develnext-doc';
+include 'develnext-store';
+include 'develnext-control';
+include 'develnext-java-platform';
+include 'develnext-js-platform';
+include 'develnext-lexer';
+include 'develnext-launcher';
+
+include 'jphp-gui-richtext-ext';
+
+include 'develnext-bundles:dn-httpclient-bundle'
+include 'develnext-bundles:dn-jsoup-bundle'
+include 'develnext-bundles:dn-mail-bundle'
+include 'develnext-bundles:dn-sql-bundle'
+include 'develnext-bundles:dn-sqlite-bundle'
+include 'develnext-bundles:dn-mysql-bundle'
+include 'develnext-bundles:dn-pgsql-bundle'
+include 'develnext-bundles:dn-firebirdsql-bundle'
+include 'develnext-bundles:dn-game2d-bundle'
+include 'develnext-bundles:dn-systemtray-bundle'
+include 'develnext-bundles:dn-hotkey-bundle'
+include 'develnext-bundles:dn-jfoenix-bundle'
+include 'develnext-bundles:dn-controlfx-bundle'
+
+// stubs
+include 'develnext-stubs:dn-php-sdk'
+include 'develnext-stubs:dn-jphp-sdk'
+include 'develnext-stubs:dn-zend-php-sdk'
+
+include 'jphp-zip-ext'
+include 'jphp-zip-ext:jphp-zip-ext'
+include 'jphp-zip-ext:dn-zip-bundle'
+include 'develnext-runtime'
+include 'develnext-loader'
+
+
+

@@ -1,0 +1,9 @@
+project.version = '1.0'
+
+dependencies {
+    implementation "org.develnext.jphp:jphp-runtime:$rootProject.ext.jphpVersion"
+    implementation project(':jphp-gui-ext')
+
+    //compile fileTree(dir: 'libs', include: '*.jar')
+    implementation group: 'com.jfoenix', name: 'jfoenix', version: '1.9.1'
+}

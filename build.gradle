@@ -1,0 +1,162 @@
+def javaVersion = '1.8';
+def projectVersion = '0.9.2';
+def jphpVersion = "0.9.2-SNAPSHOT";
+
+rootProject.ext.jphpVersion = jphpVersion;
+
+if (Boolean.getBoolean("release")) {
+    jphpVersion = projectVersion
+}
+
+buildscript {
+    repositories {
+        gradlePluginPortal()
+    }
+    dependencies {
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.5'
+    }
+}
+
+allprojects {
+    repositories {
+        mavenLocal()
+        mavenCentral()
+    }
+}
+
+allprojects {
+    apply plugin: 'idea'
+    apply plugin: 'java'
+    apply plugin: 'maven-publish'
+
+    project.group = 'org.develnext'
+    project.version = projectVersion
+
+    sourceCompatibility = javaVersion
+    targetCompatibility = javaVersion
+
+    repositories {
+        mavenLocal()
+        mavenCentral()
+    }
+
+    task sourcesJar(type: Jar) {
+        from sourceSets.main.allJava
+        archiveClassifier.set("sources")
+    }
+
+    configurations {
+        provided
+    }
+
+    sourceSets {
+        main { compileClasspath += configurations.provided }
+    }
+}
+
+subprojects {
+    def dirName = file(it.name).name;
+    def bundleDirRoot = "${projectDir}/../../develnext/misc/library/bundles/";
+    def bundleDir = "${bundleDirRoot}/${dirName}/";
+
+    if (it.name.startsWith("develnext-bundles") || it.name.endsWith("-bundle")) {
+        println "-> Detecting bundle '$it.name' ...";
+
+        def resFile = file("$projectDir/.resource")
+
+        if (!resFile.exists()) {
+            resFile = file("$projectDir/src/.resource")
+        }
+
+        if (resFile.exists()) {
+            clean {
+                delete bundleDir
+            }
+
+            def pr = it;
+
+            jar {
+                archiveBaseName.set('develnext')
+                doLast {
+                    copy {
+                        from archiveFile
+                        from(pr.configurations.runtime) {
+                            exclude '**/jphp-runtime-*.jar'
+                        }
+                        into bundleDir
+                    }
+
+                    copy {
+                        from resFile
+                        into bundleDir
+                    }
+                }
+            }
+        }
+    }
+
+    publishing {
+        publications {
+            mavenJava(MavenPublication) {
+                from components.java
+            }
+        }
+
+        repositories {
+            maven {
+                url = "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
+                credentials {
+                    username = project.findProperty("ossrhUsername") ?: ""
+                    password = project.findProperty("ossrhPassword") ?: ""
+                }
+            }
+        }
+    }
+}
+
+dependencies {
+    implementation project(':develnext-runtime')
+    implementation project(':develnext-loader')
+    implementation project(':develnext-js-platform')
+    implementation project(':jphp-gui-ext')
+    implementation project(':jphp-systemtray-ext')
+    implementation project(':jphp-parser')
+    implementation project(':jphp-zip-ext:jphp-zip-ext')
+    implementation project(':develnext-doc')
+    implementation project(':develnext-store')
+    implementation project(':develnext-java-platform')
+    implementation project(':develnext-js-platform')
+
+    if (new File("./develnext-control/build.gradle").exists()) {
+        implementation project(':develnext-control')
+    }
+
+    // bundles.
+    provided project('develnext-bundles:dn-httpclient-bundle')
+    provided project('develnext-bundles:dn-jsoup-bundle')
+    provided project('develnext-bundles:dn-mail-bundle')
+    provided project('develnext-bundles:dn-sql-bundle')
+    provided project('develnext-bundles:dn-sqlite-bundle')
+    provided project('develnext-bundles:dn-mysql-bundle')
+    provided project('develnext-bundles:dn-pgsql-bundle')
+    provided project('develnext-bundles:dn-firebirdsql-bundle')
+    provided project('develnext-bundles:dn-game2d-bundle')
+    provided project('develnext-bundles:dn-systemtray-bundle')
+    provided project('develnext-bundles:dn-hotkey-bundle')
+    provided project(':jphp-zip-ext:dn-zip-bundle')
+    provided project('develnext-bundles:dn-jfoenix-bundle')
+    //provided project(':dn-controlfx-bundle')
+
+    // stubs.
+    implementation project(':develnext-stubs:dn-php-sdk')
+    implementation project(':develnext-stubs:dn-zend-php-sdk')
+
+    implementation "org.develnext.jphp:jphp-xml-ext:$jphpVersion"
+    //implementation "org.develnext.jphp:jphp-zip-ext:$jphpVersion"
+    implementation "org.develnext.jphp:jphp-json-ext:$jphpVersion"
+    implementation "org.develnext.jphp:jphp-zend-ext:$jphpVersion"
+    implementation "org.develnext.jphp:jphp-sql-ext:$jphpVersion"
+    implementation "org.develnext.jphp:jphp-debugger:$jphpVersion"
+
+    //implementation fileTree(dir: 'libs', include: '*.jar')
+}
